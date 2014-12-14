@@ -1,0 +1,27 @@
+<h1>Announcements admin</h1>
+
+<%= grid(@announcements_grid) do |g| %>
+
+  <% g.column name: "Body", attribute: "body", filter: false do |announcement| %>
+    <% announcement.body.html_safe if announcement.body %>
+  <% end %>
+
+  <% g.column name: "Limit to users", attribute: "limit_to_users", filter: false do |announcement| %>
+    <% announcement.limit_to_users.map { |item| "#{item[:field]} = #{item[:value]}" }.join("<br/>").html_safe if announcement.limit_to_users %>
+  <% end %>
+
+  <% g.column name: "Start delivering at", attribute: "start_delivering_at", filter: false do |announcement| %>
+    <% announcement.start_delivering_at.to_date if announcement.start_delivering_at %>
+  <% end %>
+
+  <% g.column name: "Stop delivering at", attribute: "stop_delivering_at", filter: false do |announcement| %>
+    <% announcement.stop_delivering_at.to_date if announcement.stop_delivering_at %>
+  <% end %>
+
+  <% g.column do |announcement| %>
+    <% link_to "Edit", edit_announcement_path(announcement) %>
+  <% end %>
+
+<% end %>
+
+<%= link_to 'New Announcement', new_announcement_path %>
